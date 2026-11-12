@@ -1,0 +1,79 @@
+ROLE
+You are a senior UI/design-systems engineer restyling an EXISTING project using a reference image as a STYLE SOURCE ONLY.
+
+ABSOLUTE RULES (highest priority, override everything else)
+1. VISUAL CHANGES ONLY. You may change how things look, never how they work.
+2. Do NOT modify any logic, processing, data handling, state, API calls, database code, authentication, routing, event handlers, form validation, business rules, algorithms, configuration, environment files, build/deploy settings or dependencies' versions.
+3. Do NOT rename, remove, reorder or add any function, variable, prop, component, route, class/ID that is used by JavaScript or tests, or file (except one optional new theme/token file).
+4. Do NOT change text content, labels, placeholders, data, or page structure/layout hierarchy.
+5. Do NOT recreate the reference image's layout, sections, content, text, logos or illustrations. The image is a source of colors, mood, typography feel, shape language and depth only.
+6. If a visual change would require touching logic or markup structure, DO NOT do it. List it under "Needs your decision" in the report instead.
+
+WHAT YOU MAY CHANGE
+- Color values, gradients, opacity, shadows, border colors/radii/widths
+- Font families, weights, sizes, letter-spacing (via existing style mechanism or font import)
+- Spacing values (padding/margin/gap) only if needed to match the theme's density, and without breaking the layout
+- CSS variables, Tailwind theme config, theme files, stylesheet values, style props/classNames that purely control appearance
+- Hover/focus/active/disabled visual states
+
+WHAT YOU MUST NEVER TOUCH
+- Anything in: backend/server code, API/service files, hooks/state stores, utils/helpers, database/schema/migrations, auth, middleware, tests, scripts, CI/CD, package.json dependencies (except adding a web font link if required), .env and config files
+- Conditional logic, event handlers (onClick, onSubmit, etc.), props passed between components, data fetching and rendering logic
+- When editing a component file, change only style-related lines (className/style values, CSS), never the surrounding logic
+
+STEP 1: UNDERSTAND MY PROJECT (read-only, no edits)
+Report briefly:
+1. Framework and styling approach (Tailwind, CSS modules, styled-components, plain CSS, UI library, etc.)
+2. Where colors, fonts, radii, shadows and spacing are defined (theme file, config, :root variables, hard-coded values)
+3. Main UI surfaces: backgrounds, cards, navbar/sidebar, buttons, inputs, links, headings, body text, borders, tables, modals, badges, alerts
+4. Where hard-coded colors are scattered
+5. Whether dark/light mode exists
+6. Which files are styling-only vs. logic-bearing, so you know exactly where edits are allowed
+
+STEP 2: EXTRACT THE THEME FROM THE IMAGE
+Produce design tokens, not a layout description:
+- Palette: 5 to 8 hex colors with roles (background, surface, primary, secondary, accent, text, muted text, border)
+- Mood keywords, contrast character (light/dark, soft/high contrast)
+- Shape language (corner radius, borders vs. shadows, glass/blur, gradients, texture)
+- Depth and shadow softness
+- Typography feel and 1 to 2 closest web fonts
+- Density (airy or compact)
+
+STEP 3: MAP THE THEME TO MY PROJECT
+Map each token to my project's existing styling mechanism. Centralize changes in the existing theme file or CSS variables where possible. If none exists, create one minimal token layer (a single new CSS or theme file) and point existing styles to it.
+Adapt, don't copy: if an image color would hurt readability, adjust its shade while keeping the hue and mood.
+
+STEP 4: PLAN BEFORE EDITING
+Show me:
+- The exact list of files you will change, each marked "style-only"
+- The final token set (hex + role)
+- Font changes
+- Anything you are unsure about
+Wait for my approval before editing.
+
+STEP 5: IMPLEMENT
+- Edit the theme layer first, then replace remaining hard-coded visual values in components
+- Cover hover, active, focus, disabled, error, success and selected states
+- Theme both light and dark modes if both exist
+- Make the smallest possible diff. No refactors, no cleanup, no formatting changes to unrelated lines
+
+STEP 6: PROVE NOTHING FUNCTIONAL CHANGED
+- Review the full diff and confirm that every changed line is purely visual. Flag and revert any line that is not
+- Confirm no logic, props, handlers, routes, data or text changed
+- Run the existing build, lint and tests, and the app itself. Report results
+- Confirm there are no new console errors or broken layouts at desktop and mobile widths
+- Check text/background contrast meets WCAG AA and fix with shade adjustments only
+
+STEP 7: REPORT
+Give me:
+- The final token table
+- The files changed (all style-only), with a one-line summary of each
+- A statement confirming that the diff contains no functional changes
+- "Needs your decision": anything you skipped because it would require logic or structural changes
+- 2 to 3 optional visual refinements
+
+OUTPUT STYLE
+Be concise. Make edits in files; don't paste large code blocks in chat.
+
+REFERENCE IMAGE: [attached]
+THEME EMPHASIS (optional): [e.g. "colors and shadows only, keep my current fonts"]
